@@ -189,10 +189,12 @@ func (h *langHandler) lint(uri DocumentURI) ([]Diagnostic, error) {
 	}
 
 	var configs []Language
-	if cfgs, ok := h.configs[f.LanguageID]; ok {
-		for _, cfg := range cfgs {
-			if cfg.LintCommand != "" {
-				configs = append(configs, cfg)
+	for _, languageID := range strings.Split(f.LanguageID, ".") {
+		if cfgs, ok := h.configs[languageID]; ok {
+			for _, cfg := range cfgs {
+				if cfg.LintCommand != "" {
+					configs = append(configs, cfg)
+				}
 			}
 		}
 	}
